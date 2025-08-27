@@ -1,4 +1,3 @@
-// lib/core/views/main_portfolio_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
@@ -9,7 +8,6 @@ import 'package:hamza_portfolio_app/features/portfolio/presentation/module/portf
 import 'package:hamza_portfolio_app/features/portfolio/presentation/pages/sections/about_section.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/pages/sections/skills_section..dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/widgets/navigation/portfolio_navigation_bar.dart';
-
 
 class MainPortfolioPage extends StatefulWidget {
   const MainPortfolioPage({Key? key}) : super(key: key);
@@ -24,8 +22,10 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
   // Animation Controllers
   late AnimationController _fadeController;
   late AnimationController _slideController;
+  late AnimationController _scrollToTopController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
+  late Animation<double> _scrollToTopAnimation;
 
   // Navigation Controllers
   late ScrollController _scrollController;
@@ -34,6 +34,7 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
   int _currentSection = 0;
   bool _isScrolled = false;
   bool _isDisposed = false;
+  bool _showScrollToTop = false; // New variable for scroll-to-top visibility
 
   // Global Keys for each section
   final GlobalKey _homeKey = GlobalKey();
@@ -61,6 +62,12 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
       vsync: this,
     );
 
+    // Scroll-to-top animation controller
+    _scrollToTopController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
     _scrollController = ScrollController();
   }
 
@@ -80,13 +87,39 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
       parent: _slideController,
       curve: Curves.easeOutCubic,
     ));
+
+    // Scroll-to-top animation
+    _scrollToTopAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _scrollToTopController,
+      curve: Curves.easeInOut,
+    ));
   }
 
   void _setupScrollListener() {
     _scrollController.addListener(() {
-      if (!_isDisposed && mounted) { // Added mounted check
+      if (!_isDisposed && mounted) {
+        final scrollOffset = _scrollController.offset;
+        final maxScrollExtent = _scrollController.position.maxScrollExtent;
+
         setState(() {
-          _isScrolled = _scrollController.offset > 50;
+          _isScrolled = scrollOffset > 50;
+
+          // Show scroll-to-top button when user scrolls down significantly
+          // or when near the end of the page
+          bool shouldShow = scrollOffset > 200 ||
+              (maxScrollExtent > 0 && scrollOffset > maxScrollExtent * 0.3);
+
+          if (_showScrollToTop != shouldShow) {
+            _showScrollToTop = shouldShow;
+            if (_showScrollToTop) {
+              _scrollToTopController.forward();
+            } else {
+              _scrollToTopController.reverse();
+            }
+          }
         });
         _updateCurrentSection();
       }
@@ -94,7 +127,7 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
   }
 
   void _updateCurrentSection() {
-    if (!mounted) return; // Safety check
+    if (!mounted) return;
 
     final scrollOffset = _scrollController.offset;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -130,11 +163,25 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
     });
   }
 
+  // Scroll to top method
+  void _scrollToTop() {
+    if (_isDisposed || !mounted) return;
+
+    HapticFeedback.mediumImpact();
+
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
   @override
   void dispose() {
     _isDisposed = true;
     _fadeController.dispose();
     _slideController.dispose();
+    _scrollToTopController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -179,6 +226,7 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
         children: [
           _buildScrollView(),
           _buildNavigationBar(),
+          _buildScrollToTopButton(), // Add scroll-to-top button
         ],
       ),
     );
@@ -214,11 +262,11 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
             child: const SkillsPage(),
           ),
 
-          // Portfolio Section - FIXED: Using PortfolioModule instead of PortfolioSection
+          // Portfolio Section
           SizedBox(
             key: _portfolioKey,
             height: MediaQuery.of(context).size.height,
-            child: const PortfolioModule(), // ✅ This includes all providers
+            child: const PortfolioModule(),
           ),
         ],
       ),
@@ -231,6 +279,65 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
       hasScrolled: _isScrolled,
       onPageChanged: _navigateToSection,
       isDesktopLayout: ResponsiveHelper.isDesktop(context),
+    );
+  }
+
+  // Scroll-to-top button widget
+  Widget _buildScrollToTopButton() {
+    return Positioned(
+      right: ResponsiveHelper.isDesktop(context) ? 30 : 20,
+      bottom: ResponsiveHelper.isDesktop(context) ? 30 : 80, // Higher on mobile to avoid navigation
+      child: AnimatedBuilder(
+        animation: _scrollToTopAnimation,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _scrollToTopAnimation.value,
+            child: Opacity(
+              opacity: _scrollToTopAnimation.value,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(28),
+                    onTap: _scrollToTop,
+                    child: Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.primaryColor,
+                            AppColors.primaryColor.withOpacity(0.8),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.keyboard_arrow_up,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

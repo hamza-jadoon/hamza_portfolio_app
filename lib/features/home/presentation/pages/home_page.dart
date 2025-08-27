@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hamza_portfolio_app/core/constants/app_assets.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
 import 'package:hamza_portfolio_app/core/constants/app_constants.dart';
+import 'package:hamza_portfolio_app/core/constants/app_links.dart';
 import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
 import 'package:hamza_portfolio_app/core/utils/responsive_painter.dart';
 import 'package:hamza_portfolio_app/features/shared/widgets/profile_image.dart';
@@ -159,7 +160,6 @@ class HomePage extends StatelessWidget {
   Widget _buildTabletLayout(BuildContext context, double screenWidth, double screenHeight) {
     return Column(
       children: [
-        // Top section with image
         SizedBox(
           height: screenHeight * 0.5,
           width: double.infinity,
@@ -178,7 +178,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        // Bottom section with text
         Container(
           height: screenHeight * 0.5,
           padding: EdgeInsets.symmetric(
@@ -386,7 +385,7 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () => _launchURL('mailto:Hamzajadoon365@gmail.com'),
+                  onTap: () => _launchURL(AppLinks.email),
                   child: SvgPicture.asset(
                     AppAssets.vector,
                     width: 30,
@@ -396,7 +395,7 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(width: 20),
                 GestureDetector(
-                  onTap: () => _launchURL('https://www.linkedin.com/in/hamza-jadoon-6836a62a3/'),
+                  onTap: () => _launchURL(AppLinks.linkedin),
                   child: SvgPicture.asset(
                     AppAssets.linkedin,
                     width: 30,
@@ -406,7 +405,7 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(width: 20),
                 GestureDetector(
-                  onTap: () => _launchURL('https://github.com/hamza-jadoon'),
+                  onTap: () => _launchURL(AppLinks.github),
                   child: SvgPicture.asset(
                     AppAssets.github2,
                     width: 30,
