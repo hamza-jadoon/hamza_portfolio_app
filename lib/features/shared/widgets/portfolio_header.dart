@@ -32,12 +32,12 @@ class PortfolioHeader extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: ResponsiveHelper.isDesktop(context) ? 60 : 20,
-                  vertical: 120,
+                  vertical: 40,
                 ),
                 child: const Column(
                   children: [
                     SectionHeader(title: 'PORTFOLIO'),
-                    SizedBox(height: 20),
+                    // SizedBox(height: 20),
                   ],
                 ),
               ),

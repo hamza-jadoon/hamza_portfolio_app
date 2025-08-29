@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
-import 'features/home/presentation/pages/portfolio_page.dart';
+import 'features/home/presentation/pages/main_portfolio_page.dart';
 
 void main() {
   runApp(

@@ -122,13 +122,13 @@ class ProjectDetailDialog extends StatelessWidget {
               color: AppColors.getTextColor(context).withOpacity(0.1),
             ),
           ),
-          child: const Center(
-            child: Icon(
-              Icons.flutter_dash,
-              size: 48,
-              color: Colors.white,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              project.imageAsset,
+              fit: BoxFit.cover,
             ),
-          ),
+          )
         );
       }
     );

@@ -2,6 +2,10 @@ class AppAssets {
   // PNG Images
   static const String hamza1png = "assets/images/hamza1.png";
   static const String hamza2png = "assets/images/hamza2.png";
+  static const String mentalpng = "assets/images/mental.png";
+  static const String bedtimepng = "assets/images/bedtime.png";
+  static const String menyoupng = "assets/images/menyou.png";
+  static const String prayertimepng = "assets/images/prayertime.png";
 
   // SVG Icons
   static const String apl = "assets/app_icons/apl-plain.svg";
@@ -28,8 +32,6 @@ class AppAssets {
   static const String github2 = "assets/app_icons/github.svg";
   static const String linkedin = "assets/app_icons/linkdin.svg";
   static const String vector = "assets/app_icons/Vector.svg";
-
-
 
   static const String defaultSkill = "assets/app_icons/default.svg";
 

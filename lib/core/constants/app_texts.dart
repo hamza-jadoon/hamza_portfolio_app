@@ -17,8 +17,7 @@ class AppTextContent {
   static const String navPortfolio = 'Portfolio';
   static const String contactme = 'CONTACT ME';
 
-  // explore
-
+  // Explore Section
   static const String explore = 'EXPLORE';
   static const String appdevelopdic = 'Full-stack Flutter development services including cross-platform mobile apps, responsive web applications, and desktop solutions. I handle everything from architecture to deployment.';
   static const String uiuxdic = 'Creating beautiful, intuitive user interfaces and seamless user experiences for mobile applications. From wireframes to high-fidelity prototypes, I ensure your app looks stunning and functions perfectly.';
@@ -26,6 +25,39 @@ class AppTextContent {
   static const String design = 'DESIGN';
   static const String development = 'DEVELOPMENT';
   static const String maintenance = 'MAINTENANCE';
+
+  // Project Titles and Descriptions
+  static const String projectMenYouTitle = 'Men YOU – AI-Powered Food Calorie Scanner App';
+  static const String projectprayertimeTitle = 'Islamic Prayer Time App';
+  static const String projectbedtimeTitle = 'Bedtime Stories App';
+  static const String projectmentalTitle = 'Rate Your Mental Health App';
+
+  static const String projectMobileSubtitle = 'Mobile Application';
+
+  static const String projectMenYouDescription = '''
+Built with Flutter & Gemini AI for food image recognition & nutrition insights.
+Added daily streaks, history tracking and progress features.
+Used Firebase Auth & Firestore for secure login and data storage.
+          ''';
+
+  static const String projectprayerDescription = '''
+Provides accurate, location-based prayer times with customizable methods 
+(Umm Al-Qura, ISNA, etc.) and schools of thought (Hanafi, Shafi’i).
+Includes offline support using Hive and persistent user settings with SharedPreferences.
+Features prayer alerts, countdowns, and calendar view with a clean Flutter UI.
+          ''';
+
+  static const String projectbedtimeDescription ='''
+Made a Flutter app with story library, age categories, and offline reading.
+Added audio narration and a kid-friendly night mode design.
+Used Hive for storing and managing stories.
+          ''';
+
+  static const String projectmentalDescription ='''
+Designed tools for mood & stress tracking with journaling.
+Added progress charts and daily reminders.
+Used Firebase Auth & Firestore for secure data sync.
+          ''';
 
   // Skills Names
   static const String skillFlutter = 'FLUTTER';

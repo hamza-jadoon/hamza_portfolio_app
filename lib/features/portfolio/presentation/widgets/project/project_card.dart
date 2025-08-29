@@ -273,8 +273,13 @@ class _ProjectCardState extends State<ProjectCard>
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Stack(
+          fit: StackFit.expand,
           children: [
             _buildGradientBackground(),
+            Image.asset(
+              widget.project.imageAsset,
+              fit: BoxFit.cover,
+            ),
             _buildWireframeOverlay(),
           ],
         ),

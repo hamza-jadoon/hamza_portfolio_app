@@ -4,8 +4,10 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart' show StatelessWidget;
 import 'package:flutter/material.dart';
+import 'package:hamza_portfolio_app/core/constants/app_assets.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
 import 'package:hamza_portfolio_app/core/constants/app_constants.dart';
+import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
 
 class ProfileImage extends StatelessWidget {
   final Animation<double> fadeAnimation;
@@ -37,7 +39,7 @@ class ProfileImage extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppConstants.defaultRadius * 2),
-          // child: Image.asset('assets/hamza1.png'),
+          // child: Image.asset(AppAssets.hamza2png),
 
         ),
       ),
