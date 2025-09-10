@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
 import 'package:hamza_portfolio_app/features/portfolio/data/models/project_model.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/widgets/project/project_detail_dialog.dart';
-import 'package:hamza_portfolio_app/features/shared/widgets/wireframe_painter.dart';
-
 
 class ProjectCard extends StatefulWidget {
   final ProjectModel project;
@@ -105,11 +103,54 @@ class _ProjectCardState extends State<ProjectCard>
                 decoration: _buildCardDecoration(context),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    padding: EdgeInsets.all(widget.isLarge ? 40 : 30),
-                    child: widget.isLarge
-                        ? _buildLargeLayout()
-                        : _buildCompactLayout(),
+                  child: Column(
+                    children: [
+                      // Project Image - Takes most of the space
+                      Expanded(
+                        flex: 3,
+                        child: _buildProjectImage(),
+                      ),
+                      // Project Name - Bottom section
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.darkSurface.withOpacity(0.9)
+                              : AppColors.lightSurface.withOpacity(0.9),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.project.title,
+                              style: TextStyle(
+                                color: AppColors.getTextColor(context),
+                                fontSize: widget.isLarge ? 18 : 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (widget.project.subtitle.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                widget.project.subtitle,
+                                style: TextStyle(
+                                  color: AppColors.gradientStart,
+                                  fontSize: widget.isLarge ? 12 : 11,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -154,162 +195,54 @@ class _ProjectCardState extends State<ProjectCard>
     );
   }
 
-  Widget _buildLargeLayout() {
-    return Row(
-      children: [
-        Expanded(flex: 1, child: _buildContent()),
-        const SizedBox(width: 40),
-        Expanded(flex: 1, child: _buildMockup()),
-      ],
-    );
-  }
-
-  Widget _buildCompactLayout() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(flex: 2, child: _buildMockup()),
-        const SizedBox(height: 20),
-        Expanded(flex: 3, child: _buildContent()),
-      ],
-    );
-  }
-
-  Widget _buildContent() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildSubtitle(),
-          const SizedBox(height: 8),
-          _buildTitle(),
-          const SizedBox(height: 16),
-          _buildDescription(),
-          const SizedBox(height: 20),
-          _buildTags(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSubtitle() {
-    return Text(
-      widget.project.subtitle,
-      style: TextStyle(
-        color: AppColors.gradientStart,
-        fontSize: widget.isLarge ? 14 : 12,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 1,
-      ),
-    );
-  }
-
-  Widget _buildTitle() {
-    return Text(
-      widget.project.title,
-      style: TextStyle(
-        color: AppColors.getTextColor(context),
-        fontSize: widget.isLarge ? 28 : 20,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-  }
-
-  Widget _buildDescription() {
-    return Text(
-      widget.project.description,
-      style: TextStyle(
-        color: AppColors.getTextColor(context).withOpacity(0.7),
-        fontSize: widget.isLarge ? 14 : 12,
-        height: 1.6,
-      ),
-      maxLines: widget.isLarge ? 6 : 4,
-      overflow: TextOverflow.ellipsis,
-    );
-  }
-
-  Widget _buildTags() {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: widget.project.tags
-          .map((tag) => _buildTag(tag))
-          .toList(),
-    );
-  }
-
-  Widget _buildTag(String tag) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: AppColors.getSkillColor(tag).withOpacity(0.2),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.getSkillColor(tag).withOpacity(0.5),
-        ),
-      ),
-      child: Text(
-        tag,
-        style: TextStyle(
-          color: AppColors.getSkillColor(tag),
-          fontSize: 10,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMockup() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: AppColors.getSurfaceColor(context).withOpacity(0.5),
-        border: Border.all(
-          color: AppColors.getTextColor(context).withOpacity(0.1),
-        ),
-        gradient: AppColors.logoGradient.scale(0.3),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            _buildGradientBackground(),
-            Image.asset(
-              widget.project.imageAsset,
-              fit: BoxFit.cover,
-            ),
-            _buildWireframeOverlay(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGradientBackground() {
+  Widget _buildProjectImage() {
     return Container(
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.gradientStart.withOpacity(0.1),
-            AppColors.gradientEnd.withOpacity(0.05),
-          ],
-        ),
+        color: AppColors.getSurfaceColor(context).withOpacity(0.5),
+        gradient: AppColors.logoGradient.scale(0.3),
       ),
-    );
-  }
-
-  Widget _buildWireframeOverlay() {
-    return Positioned.fill(
-      child: CustomPaint(
-        painter: WireframePainter(
-          color: AppColors.getTextColor(context).withOpacity(0.3),
-        ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Project Image
+          Image.asset(
+            widget.project.imageAsset,
+            fit: BoxFit.cover,
+          ),
+          // Hover Overlay
+          if (_isHovered)
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    AppColors.gradientStart.withOpacity(0.1),
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    'View Details',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: widget.isLarge ? 14 : 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

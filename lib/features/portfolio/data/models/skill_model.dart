@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SkillModel {
   final String name;
   final Color color;
   final IconData? icon;
   final String? text;
-  final String? svgPath; // Add SVG path support
+  final String? assetPath; // works for both PNG & SVG
   final String? category;
-  final int? proficiency; // 1-5 scale
+  final int? proficiency; // 1–5 scale
 
   const SkillModel({
     required this.name,
     required this.color,
     this.icon,
     this.text,
-    this.svgPath,
+    this.assetPath,
     this.category,
     this.proficiency,
   });
 
-  // Factory constructors for common skill types
+  // Factory for IconData-based skill
   factory SkillModel.withIcon({
     required String name,
     required Color color,
@@ -36,6 +37,7 @@ class SkillModel {
     );
   }
 
+  // Factory for Text-based skill
   factory SkillModel.withText({
     required String name,
     required Color color,
@@ -52,43 +54,63 @@ class SkillModel {
     );
   }
 
-  // New factory constructor for SVG icons
-  factory SkillModel.withSvg({
+  // Factory for Asset-based skill (PNG/SVG both)
+  factory SkillModel.withAsset({
     required String name,
     required Color color,
-    required String svgPath,
+    required String assetPath,
     String? category,
     int? proficiency,
   }) {
     return SkillModel(
       name: name,
       color: color,
-      svgPath: svgPath,
+      assetPath: assetPath,
       category: category,
       proficiency: proficiency,
     );
   }
 
-  // Getters for validation
+  // --- Utility ---
   bool get hasIcon => icon != null;
   bool get hasText => text != null && text!.isNotEmpty;
-  bool get hasSvg => svgPath != null && svgPath!.isNotEmpty;
-  bool get isValid => hasIcon || hasText || hasSvg;
+  bool get hasAsset => assetPath != null && assetPath!.isNotEmpty;
+  bool get isValid => hasIcon || hasText || hasAsset;
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is SkillModel &&
-        other.name == name &&
-        other.color == color;
+  /// Widget builder for UI
+  Widget getWidget({double size = 40}) {
+    if (hasIcon) {
+      return Icon(icon, color: color, size: size);
+    } else if (hasText) {
+      return Text(
+        text!,
+        style: TextStyle(
+          fontSize: size * 0.5,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    } else if (hasAsset) {
+      if (assetPath!.toLowerCase().endsWith('.svg')) {
+        return SvgPicture.asset(
+          assetPath!,
+          width: size,
+          height: size,
+        );
+      } else {
+        return Image.asset(
+          assetPath!,
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+        );
+      }
+    }
+    return const SizedBox.shrink();
   }
 
   @override
-  int get hashCode => name.hashCode ^ color.hashCode;
-
-  @override
   String toString() {
-    return 'SkillModel(name: $name, color: $color, '
-        'hasIcon: $hasIcon, hasText: $hasText, hasSvg: $hasSvg)';
+    return 'SkillModel(name: $name, category: $category, proficiency: $proficiency)';
   }
 }

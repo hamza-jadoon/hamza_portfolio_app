@@ -34,7 +34,7 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
   int _currentSection = 0;
   bool _isScrolled = false;
   bool _isDisposed = false;
-  bool _showScrollToTop = false; // New variable for scroll-to-top visibility
+  bool _showScrollToTop = false;
 
   // Global Keys for each section
   final GlobalKey _homeKey = GlobalKey();
@@ -62,7 +62,6 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
       vsync: this,
     );
 
-    // Scroll-to-top animation controller
     _scrollToTopController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -88,7 +87,6 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
       curve: Curves.easeOutCubic,
     ));
 
-    // Scroll-to-top animation
     _scrollToTopAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -99,55 +97,83 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
   }
 
   void _setupScrollListener() {
-    _scrollController.addListener(() {
-      if (!_isDisposed && mounted) {
-        final scrollOffset = _scrollController.offset;
-        final maxScrollExtent = _scrollController.position.maxScrollExtent;
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    // Add safety checks to prevent operations on disposed controllers
+    if (_isDisposed || !mounted) return;
+
+    try {
+      final scrollOffset = _scrollController.offset;
+      final maxScrollExtent = _scrollController.position.maxScrollExtent;
+
+      // Use a post-frame callback to ensure UI updates happen at the right time
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_isDisposed || !mounted) return;
 
         setState(() {
           _isScrolled = scrollOffset > 50;
 
-          // Show scroll-to-top button when user scrolls down significantly
-          // or when near the end of the page
           bool shouldShow = scrollOffset > 200 ||
               (maxScrollExtent > 0 && scrollOffset > maxScrollExtent * 0.3);
 
           if (_showScrollToTop != shouldShow) {
             _showScrollToTop = shouldShow;
-            if (_showScrollToTop) {
+            if (_showScrollToTop && !_scrollToTopController.isCompleted) {
               _scrollToTopController.forward();
-            } else {
+            } else if (!_showScrollToTop && !_scrollToTopController.isDismissed) {
               _scrollToTopController.reverse();
             }
           }
         });
         _updateCurrentSection();
-      }
-    });
+      });
+    } catch (e) {
+      // Handle any potential errors during scroll handling
+      debugPrint('Error in scroll listener: $e');
+    }
   }
 
   void _updateCurrentSection() {
-    if (!mounted) return;
+    if (_isDisposed || !mounted) return;
 
-    final scrollOffset = _scrollController.offset;
-    final screenHeight = MediaQuery.of(context).size.height;
+    try {
+      final RenderBox? homeBox = _homeKey.currentContext?.findRenderObject() as RenderBox?;
+      final RenderBox? aboutBox = _aboutKey.currentContext?.findRenderObject() as RenderBox?;
+      final RenderBox? skillsBox = _skillsKey.currentContext?.findRenderObject() as RenderBox?;
+      final RenderBox? portfolioBox = _portfolioKey.currentContext?.findRenderObject() as RenderBox?;
 
-    int newSection = 0;
-    if (scrollOffset < screenHeight * 0.5) {
-      newSection = 0;
-    } else if (scrollOffset < screenHeight * 1.5) {
-      newSection = 1;
-    } else if (scrollOffset < screenHeight * 2.5) {
-      newSection = 2;
-    } else {
-      newSection = 3;
+      if (homeBox == null || aboutBox == null || skillsBox == null || portfolioBox == null) return;
+
+      final scrollOffset = _scrollController.offset;
+
+      // Get positions of each section
+      final double aboutPosition = aboutBox.localToGlobal(Offset.zero).dy + scrollOffset;
+      final skillsPosition = skillsBox.localToGlobal(Offset.zero).dy + scrollOffset;
+      final portfolioPosition = portfolioBox.localToGlobal(Offset.zero).dy + scrollOffset;
+
+      int newSection = 0;
+      final currentScrollWithOffset = scrollOffset + (MediaQuery.of(context).size.height * 0.3);
+
+      if (currentScrollWithOffset >= portfolioPosition) {
+        newSection = 3;
+      } else if (currentScrollWithOffset >= skillsPosition) {
+        newSection = 2;
+      } else if (currentScrollWithOffset >= aboutPosition) {
+        newSection = 1;
+      } else {
+        newSection = 0;
+      }
+
+      _setCurrentSection(newSection);
+    } catch (e) {
+      debugPrint('Error in _updateCurrentSection: $e');
     }
-
-    _setCurrentSection(newSection);
   }
 
   void _setCurrentSection(int section) {
-    if (_currentSection != section && mounted) {
+    if (_currentSection != section && mounted && !_isDisposed) {
       setState(() {
         _currentSection = section;
       });
@@ -155,15 +181,23 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
   }
 
   void _startInitialAnimations() {
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (!_isDisposed && mounted) {
-        _fadeController.forward();
-        _slideController.forward();
-      }
+    // Use a post-frame callback instead of Future.delayed for better timing
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_isDisposed || !mounted) return;
+
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (_isDisposed || !mounted) return;
+
+        try {
+          _fadeController.forward();
+          _slideController.forward();
+        } catch (e) {
+          debugPrint('Error starting animations: $e');
+        }
+      });
     });
   }
 
-  // Scroll to top method
   void _scrollToTop() {
     if (_isDisposed || !mounted) return;
 
@@ -178,11 +212,27 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
 
   @override
   void dispose() {
+    // Set disposed flag first to prevent any ongoing operations
     _isDisposed = true;
+
+    // Remove scroll listener first
+    _scrollController.removeListener(_onScroll);
+
+    // Stop all animations before disposing controllers
+    try {
+      _fadeController.stop();
+      _slideController.stop();
+      _scrollToTopController.stop();
+    } catch (e) {
+      debugPrint('Error stopping animations: $e');
+    }
+
+    // Dispose controllers
     _fadeController.dispose();
     _slideController.dispose();
     _scrollToTopController.dispose();
     _scrollController.dispose();
+
     super.dispose();
   }
 
@@ -191,85 +241,123 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
 
     HapticFeedback.lightImpact();
 
+    // Wait for next frame to ensure widgets are built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_isDisposed || !mounted) return;
+
+      GlobalKey targetKey;
+      switch (section) {
+        case 0:
+          targetKey = _homeKey;
+          break;
+        case 1:
+          targetKey = _aboutKey;
+          break;
+        case 2:
+          targetKey = _skillsKey;
+          break;
+        case 3:
+          targetKey = _portfolioKey;
+          break;
+        default:
+          targetKey = _homeKey;
+      }
+
+      final RenderBox? renderBox = targetKey.currentContext?.findRenderObject() as RenderBox?;
+      if (renderBox != null) {
+        final position = renderBox.localToGlobal(Offset.zero);
+        final targetOffset = _scrollController.offset + position.dy;
+
+        _scrollController.animateTo(
+          targetOffset,
+          duration: AppConstants.pageTransitionDuration,
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  double _getSectionHeight(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    double targetOffset;
+    final isDesktop = ResponsiveHelper.isDesktop(context);
 
-    switch (section) {
-      case 0:
-        targetOffset = 0;
-        break;
-      case 1:
-        targetOffset = screenHeight;
-        break;
-      case 2:
-        targetOffset = screenHeight * 2;
-        break;
-      case 3:
-        targetOffset = screenHeight * 3;
-        break;
-      default:
-        targetOffset = 0;
+    // Adjust heights based on screen size and device type
+    if (isDesktop) {
+      return screenHeight;
+    } else {
+      // On mobile, sections can be flexible height
+      return screenHeight;
     }
-
-    _scrollController.animateTo(
-      targetOffset,
-      duration: AppConstants.pageTransitionDuration,
-      curve: Curves.easeInOut,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
+    // Add safety check for disposed state
+    if (_isDisposed) {
+      return const SizedBox.shrink();
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           _buildScrollView(),
           _buildNavigationBar(),
-          _buildScrollToTopButton(), // Add scroll-to-top button
+          _buildScrollToTopButton(),
         ],
       ),
     );
   }
 
   Widget _buildScrollView() {
-    return SingleChildScrollView(
+    return CustomScrollView(
       controller: _scrollController,
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          // Home Section
-          SizedBox(
+      slivers: [
+        // Home Section
+        SliverToBoxAdapter(
+          child: SizedBox(
             key: _homeKey,
-            height: MediaQuery.of(context).size.height,
+            height: _getSectionHeight(context),
             child: HomePage(
               fadeAnimation: _fadeAnimation,
               slideAnimation: _slideAnimation,
             ),
           ),
+        ),
 
-          // About Section
-          SizedBox(
+        // About Section
+        SliverToBoxAdapter(
+          child: Container(
             key: _aboutKey,
-            height: MediaQuery.of(context).size.height,
+            constraints: BoxConstraints(
+              minHeight: _getSectionHeight(context),
+            ),
             child: const AboutPage(),
           ),
+        ),
 
-          // Skills Section
-          SizedBox(
+        // Skills Section
+        SliverToBoxAdapter(
+          child: Container(
             key: _skillsKey,
-            height: MediaQuery.of(context).size.height,
+            constraints: BoxConstraints(
+              minHeight: _getSectionHeight(context),
+            ),
             child: const SkillsPage(),
           ),
+        ),
 
-          // Portfolio Section
-          SizedBox(
+        // Portfolio Section
+        SliverToBoxAdapter(
+          child: Container(
             key: _portfolioKey,
-            height: MediaQuery.of(context).size.height,
+            constraints: BoxConstraints(
+              minHeight: _getSectionHeight(context),
+            ),
             child: const PortfolioModule(),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -282,11 +370,10 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
     );
   }
 
-  // Scroll-to-top button widget
   Widget _buildScrollToTopButton() {
     return Positioned(
       right: ResponsiveHelper.isDesktop(context) ? 30 : 20,
-      bottom: ResponsiveHelper.isDesktop(context) ? 30 : 80, // Higher on mobile to avoid navigation
+      bottom: ResponsiveHelper.isDesktop(context) ? 30 : 80,
       child: AnimatedBuilder(
         animation: _scrollToTopAnimation,
         builder: (context, child) {

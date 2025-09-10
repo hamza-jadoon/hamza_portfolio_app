@@ -7,73 +7,73 @@ import 'package:hamza_portfolio_app/features/portfolio/data/models/skill_model.d
 class SkillsData {
   static List<SkillModel> getCurrentSkills() {
     return [
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillFlutter,
         color: AppColors.flutterColor,
-        svgPath: AppAssets.flutter,
+        assetPath: AppAssets.flutter,
         category: AppTextContent.categoryFramework,
         proficiency: 5,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillDart,
         color: AppColors.dartColor,
-        svgPath: AppAssets.dart,
+        assetPath: AppAssets.dart,
         category: AppTextContent.categoryProgramming,
         proficiency: 5,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillFirebase,
         color: AppColors.firebaseColor,
-        svgPath: AppAssets.firebase,
+        assetPath: AppAssets.firebase,
         category: AppTextContent.categoryBackend,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillApiIntegration,
         color: AppColors.apiIntegrationColor,
-        svgPath: AppAssets.apl,
+        assetPath: AppAssets.apl,
         category: AppTextContent.categoryDataIntegration,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillUiUx,
         color: AppColors.uiUxColor,
-        svgPath: AppAssets.defaultSkill,
+        assetPath: AppAssets.uiux,
         category: AppTextContent.categoryFrontendUi,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillHttp,
         color: AppColors.httpColor,
-        svgPath: AppAssets.defaultSkill,
+        assetPath: AppAssets.http,
         category: AppTextContent.categoryNetworking,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillSqflite,
         color: AppColors.sqfliteColor,
-        svgPath: AppAssets.defaultSkill,
+        assetPath: AppAssets.sql,
         category: AppTextContent.categoryDatabase,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillHive,
         color: AppColors.hiveColor,
-        svgPath: AppAssets.defaultSkill,
+        assetPath: AppAssets.nodejs,
         category: AppTextContent.categoryDatabase,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillGithub,
         color: AppColors.githubColor,
-        svgPath: AppAssets.github,
+        assetPath: AppAssets.github,
         category: AppTextContent.categoryTools,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillAndroidStudio,
         color: AppColors.androidStudioColor,
-        svgPath: AppAssets.androidStudio,
+        assetPath: AppAssets.androidStudio,
         category: AppTextContent.categoryTools,
         proficiency: 5,
       ),
@@ -82,66 +82,66 @@ class SkillsData {
 
   static List<SkillModel> getLearningSkills() {
     return [
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillBloc,
         color: AppColors.blocColor,
-        svgPath: AppAssets.defaultSkill,
+        assetPath: AppAssets.javascript,
         category: AppTextContent.categoryStateManagement,
         proficiency: 3,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillDio,
         color: AppColors.dioColor,
-        svgPath: AppAssets.defaultSkill,
+        assetPath: AppAssets.nodejs,
         category: AppTextContent.categoryNetworking,
         proficiency: 3,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillGetx,
         color: AppColors.getxColor,
-        svgPath: AppAssets.defaultSkill,
+        assetPath: AppAssets.javascript,
         category: AppTextContent.categoryStateManagement,
         proficiency: 2,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillNodeJs,
         color: AppColors.nodeJsColor,
-        svgPath: AppAssets.nodejs,
+        assetPath: AppAssets.nodejs,
         category: AppTextContent.categoryFramework,
         proficiency: 2,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillPython,
         color: AppColors.pythonColor,
-        svgPath: AppAssets.python,
+        assetPath: AppAssets.python,
         category: AppTextContent.categoryProgramming,
         proficiency: 3,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillSwift,
         color: AppColors.swiftColor,
-        svgPath: AppAssets.swift,
+        assetPath: AppAssets.swift,
         category: AppTextContent.categoryProgramming,
         proficiency: 3,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillReact,
         color: AppColors.reactColor,
-        svgPath: AppAssets.react,
+        assetPath: AppAssets.react,
         category: AppTextContent.categoryFramework,
         proficiency: 2,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillJava,
-        color: AppColors.javaColor,
-        svgPath: AppAssets.java,
+        color: AppColors.hiveColor,
+        assetPath: AppAssets.java,
         category: AppTextContent.categoryProgramming,
         proficiency: 2,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillGit,
-        color: AppColors.sharedPrefColor,
-        svgPath: AppAssets.git,
+        color: AppColors.getxColor,
+        assetPath: AppAssets.git,
         category: AppTextContent.categoryTools,
         proficiency: 5,
       ),
@@ -150,45 +150,38 @@ class SkillsData {
 
   static List<SkillModel> getOtherSkills() {
     return [
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillHtml5,
-        color: AppColors.html5Color,
-        svgPath: AppAssets.html5,
+        color: AppColors.figmaColor,
+        assetPath: AppAssets.html5,
         category: AppTextContent.categoryFrontendUi,
         proficiency: 5,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillCss3,
-        color: AppColors.cssColor,
-        svgPath: AppAssets.css3,
+        color: AppColors.hiveColor,
+        assetPath: AppAssets.css3,
         category: AppTextContent.categoryFrontendUi,
         proficiency: 5,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillVsCode,
         color: AppColors.vsCodeColor,
-        svgPath: AppAssets.vscode,
+        assetPath: AppAssets.nodejs,
         category: AppTextContent.categoryTools,
         proficiency: 4,
       ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillFigma,
         color: AppColors.figmaColor,
-        svgPath: AppAssets.figma,
+        assetPath: AppAssets.figma,
         category: AppTextContent.categoryDesign,
         proficiency: 4,
       ),
-      // SkillModel.withSvg(
-      //   name: 'SHARED PREF',
-      //   color: AppColors.sharedPrefColor,
-      //   svgPath: 'assets/icons/shared_preferences.svg',
-      //   category: 'Storage',
-      //   proficiency: 5,
-      // ),
-      SkillModel.withSvg(
+      SkillModel.withAsset(
         name: AppTextContent.skillJavascript,
-        color: AppColors.javascriptColor,
-        svgPath: AppAssets.javascript,
+        color: AppColors.hiveColor,
+        assetPath: AppAssets.javascript,
         category: AppTextContent.categoryProgramming,
         proficiency: 5,
       ),
@@ -205,7 +198,8 @@ class SkillsData {
 
   static List<SkillModel> getSkillsByCategory(String category) {
     return getAllSkills()
-        .where((skill) => skill.category?.toLowerCase() == category.toLowerCase())
+        .where((skill) =>
+    skill.category?.toLowerCase() == category.toLowerCase())
         .toList();
   }
 

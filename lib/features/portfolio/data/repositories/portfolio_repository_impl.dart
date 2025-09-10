@@ -4,8 +4,8 @@ import 'package:hamza_portfolio_app/features/portfolio/data/models/project_model
 import 'package:hamza_portfolio_app/features/portfolio/domain/repositories/portfolio_repository.dart';
 
 class PortfolioRepositoryImpl implements PortfolioRepository {
-  static const List<Map<String, dynamic>> _projectsData = [
-    {
+  static final List<Map<String, dynamic>> _projectsData = [
+    const {
       'id': '1',
       'title': AppTextContent.projectMenYouTitle,
       'subtitle': AppTextContent.projectMobileSubtitle,
@@ -15,9 +15,11 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
         AppTextContent.skillFlutter,
         AppTextContent.skillFirebase,
         AppTextContent.skillUiUx,
+        AppTextContent.skillApiIntegration,
+        AppTextContent.riverpod,
       ],
     },
-    {
+    const {
       'id': '2',
       'title': AppTextContent.projectprayertimeTitle,
       'subtitle': AppTextContent.projectMobileSubtitle,
@@ -27,9 +29,11 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
         AppTextContent.skillFlutter,
         AppTextContent.skillFirebase,
         AppTextContent.skillApiIntegration,
+        AppTextContent.skillLocalNotification,
+        AppTextContent.skillCleanArchitecture,
       ],
     },
-    {
+    const {
       'id': '3',
       'title': AppTextContent.projectbedtimeTitle,
       'subtitle': AppTextContent.projectMobileSubtitle,
@@ -37,8 +41,10 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
       'imageAsset': AppAssets.bedtimepng,
       'tags': [
         AppTextContent.skillFlutter,
-        AppTextContent.skillHttp,
+        AppTextContent.skillUiUx,
         AppTextContent.skillBloc,
+        AppTextContent.skillAnimations,
+        AppTextContent.skillDatabase,
       ],
     },
     {
@@ -51,8 +57,11 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
         AppTextContent.skillFlutter,
         AppTextContent.skillApiIntegration,
         AppTextContent.skillUiUx,
+        AppTextContent.skillAuthentication,
+        AppTextContent.skillHttp,
       ],
     },
+
   ];
 
   @override

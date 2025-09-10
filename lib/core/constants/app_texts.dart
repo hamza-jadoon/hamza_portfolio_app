@@ -14,6 +14,7 @@ class AppTextContent {
   static const String navHome = 'Home';
   static const String navAboutMe = 'About me';
   static const String navSkills = 'Skills';
+  static const String navSkill = 'Skills';
   static const String navPortfolio = 'Portfolio';
   static const String contactme = 'CONTACT ME';
 
@@ -84,6 +85,17 @@ Used Firebase Auth & Firestore for secure data sync.
   static const String skillVsCode = 'VS CODE';
   static const String skillFigma = 'FIGMA';
   static const String skillJavascript = 'JAVASCRIPT';
+  static const String currentskills = 'CURRENT SKILLS';
+  static const String learning = 'LEARNING';
+  static const String otherskills = 'OTHER SKILLS';
+
+  static const String riverpod = 'RIVERPOD';
+  static const String skillCleanArchitecture = 'CLEAN ARCHITECTURE';
+  static const String skillLocalNotification = 'LOCAL NOTIFICATION';
+  static const String skillAnimations = 'ANIMATIONS';
+  static const String skillDatabase = 'SQFLITE DATABASE';
+  static const String skillAuthentication = 'AUTHENTICATION';
+
 
   // Skill Categories
   static const String categoryFramework = 'Framework';
@@ -96,4 +108,35 @@ Used Firebase Auth & Firestore for secure data sync.
   static const String categoryTools = 'Tools';
   static const String categoryStateManagement = 'State Management';
   static const String categoryDesign = 'Design';
+
+  // Contact Form Dialog Texts
+  static const String letsConnect = "Let's Connect";
+  static const String loveToHear = "I'd love to hear from you";
+  static const String contactfullName = "Full Name";
+  static const String emailAddress = "Email Address";
+  static const String subject = "Subject";
+  static const String yourMessage = "Your Message";
+  static const String sendMessage = "Send Message";
+  static const String sending = "Sending...";
+
+  // Success Dialog Texts
+  static const String messageSentSuccess = "Message Sent Successfully!";
+  static const String thankYouMessage = "Thank you for reaching out. I'll get back to you soon!";
+  static const String sendAnotherMessage = "Send Another Message";
+  static const String close = "Close";
+
+  // Error Messages
+  static const String failedToSend = "Failed to send message. Please try again.";
+  static const String connectionError = "An error occurred. Please check your internet connection.";
+
+  // Validation Messages
+  static const String pleaseEnterName = "Please enter your name";
+  static const String nameTooShort = "Name must be at least 2 characters";
+  static const String pleaseEnterEmail = "Please enter your email";
+  static const String invalidEmail = "Please enter a valid email";
+  static const String pleaseEnterSubject = "Please enter a subject";
+  static const String subjectTooShort = "Subject must be at least 5 characters";
+  static const String pleaseEnterMessage = "Please enter your message";
+  static const String messageTooShort = "Message should be at least 10 characters long";
+
 }

@@ -16,9 +16,11 @@ dependencies:
 
   # State management
   provider: ^6.0.5
+  http: ^1.5.0
 
   # For using SVG assets
-  flutter_svg: ^2.0.7
+  flutter_svg: ^2.0.10+1
+  vector_graphics: ^1.1.11+1
   url_launcher: ^6.3.0
   custom_navigation_bar: ^0.8.2
 

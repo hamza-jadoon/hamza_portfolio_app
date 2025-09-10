@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
 import 'package:hamza_portfolio_app/core/utils/responsive_helper.dart';
 import 'package:hamza_portfolio_app/features/portfolio/data/models/skill_model.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/widgets/skill/common/skill_item.dart';
@@ -15,28 +16,28 @@ class SkillsPage extends StatelessWidget {
         color: Theme.of(context).scaffoldBackgroundColor,
         padding: EdgeInsets.symmetric(
           horizontal: ResponsiveHelper.isDesktop(context) ? 60 : 20,
-          vertical: 120,
+          vertical: 50,
         ),
         child: Column(
           children: [
-            const SectionHeader(title: 'SKILLS'),
-            const SizedBox(height: 80),
+            const SectionHeader(title: AppTextContent.navSkill),
+            const SizedBox(height: 40),
             _buildSkillSection(
               context,
-              'CURRENT SKILLS',
+              AppTextContent.currentskills,
               SkillsData.getCurrentSkills(),
               showTitle: false, // Hide title for main skills
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 40),
             _buildSkillSection(
               context,
-              'LEARNING',
+              AppTextContent.learning,
               SkillsData.getLearningSkills(),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 40),
             _buildSkillSection(
               context,
-              'OTHER SKILLS',
+              AppTextContent.otherskills,
               SkillsData.getOtherSkills(),
             ),
           ],
@@ -184,7 +185,7 @@ class _AdvancedSkillsPageState extends State<AdvancedSkillsPage>
           ),
           child: Column(
             children: [
-              const SectionHeader(title: 'SKILLS'),
+              const SectionHeader(title: AppTextContent.navSkill),
               const SizedBox(height: 40),
               _buildCategoryFilter(),
               const SizedBox(height: 60),
