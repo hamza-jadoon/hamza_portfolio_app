@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
-import 'package:hamza_portfolio_app/core/utils/responsive_helper.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/utils/responsive_helper.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/widgets/modern_background.dart';
 import 'package:hamza_portfolio_app/features/portfolio/data/models/services_model.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/widgets/service/service_card.dart';
-import 'package:hamza_portfolio_app/features/shared/widgets/modern_background.dart';
 import 'header_section.dart';
 
 class AboutPage extends StatefulWidget {

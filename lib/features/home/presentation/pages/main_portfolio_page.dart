@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/utils/responsive_helper.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
 import 'package:hamza_portfolio_app/core/constants/app_constants.dart';
-import 'package:hamza_portfolio_app/core/utils/responsive_helper.dart';
 import 'package:hamza_portfolio_app/features/home/presentation/pages/home_page.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/module/portfolio_module.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/pages/sections/about_section.dart';
@@ -41,6 +41,7 @@ class _MainPortfolioPageState extends State<MainPortfolioPage>
   final GlobalKey _aboutKey = GlobalKey();
   final GlobalKey _skillsKey = GlobalKey();
   final GlobalKey _portfolioKey = GlobalKey();
+
 
   @override
   void initState() {

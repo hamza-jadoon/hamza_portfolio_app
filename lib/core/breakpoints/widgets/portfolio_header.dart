@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/utils/responsive_helper.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
-import 'package:hamza_portfolio_app/core/utils/responsive_helper.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/pages/sections/header_section.dart';
 
 class PortfolioHeader extends StatelessWidget {

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hamza_portfolio_app/core/constants/app_constants.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart';
 import 'contact_form_dialog.dart';
 
 class ContactButton extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:hamza_portfolio_app/core/constants/app_assets.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart' show AppTextContent;
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart' show AppTextContent;
 import 'package:hamza_portfolio_app/features/portfolio/data/models/project_model.dart';
 import 'package:hamza_portfolio_app/features/portfolio/domain/repositories/portfolio_repository.dart';
 

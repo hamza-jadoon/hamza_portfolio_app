@@ -1,13 +1,13 @@
 // ignore_for_file: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/widgets/modern_background.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/widgets/profile_image.dart';
 import 'package:hamza_portfolio_app/core/constants/app_assets.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
 import 'package:hamza_portfolio_app/core/constants/app_constants.dart';
-import 'package:hamza_portfolio_app/core/constants/app_links.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
-import 'package:hamza_portfolio_app/features/shared/widgets/modern_background.dart';
-import 'package:hamza_portfolio_app/features/shared/widgets/profile_image.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_links.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {

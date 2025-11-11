@@ -2,9 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hamza_portfolio_app/contact/service/email_service..dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart';
+import 'package:hamza_portfolio_app/features/contact/service/email_service..dart';
 
 
 class ContactFormDialog extends StatefulWidget {

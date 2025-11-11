@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
-import 'package:hamza_portfolio_app/core/utils/responsive_helper.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/utils/responsive_helper.dart';
 import 'package:hamza_portfolio_app/features/portfolio/data/models/skill_model.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/widgets/skill/common/skill_item.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/widgets/skill/common/skills_data.dart';

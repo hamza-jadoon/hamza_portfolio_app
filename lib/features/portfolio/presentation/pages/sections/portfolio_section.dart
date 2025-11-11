@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/utils/responsive_helper.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/widgets/loading_widget.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/widgets/portfolio_header.dart';
 import 'package:hamza_portfolio_app/core/constants/app_constants.dart';
-import 'package:hamza_portfolio_app/core/utils/responsive_helper.dart';
 import 'package:hamza_portfolio_app/features/portfolio/data/models/portfolio_view_model.dart';
 import 'package:hamza_portfolio_app/features/portfolio/presentation/widgets/project/projects_grid.dart';
-import 'package:hamza_portfolio_app/features/shared/widgets/loading_widget.dart';
-import 'package:hamza_portfolio_app/features/shared/widgets/portfolio_header.dart';
 import 'package:provider/provider.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hamza_portfolio_app/core/constants/app_assets.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart';
 import 'package:hamza_portfolio_app/features/portfolio/data/models/skill_model.dart';
 
 class SkillsData {

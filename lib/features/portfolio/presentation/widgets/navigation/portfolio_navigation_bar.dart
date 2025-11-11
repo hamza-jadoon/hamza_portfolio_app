@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hamza_portfolio_app/contact/contact_button.dart';
 import 'package:hamza_portfolio_app/core/constants/app_constants.dart';
-import 'package:hamza_portfolio_app/core/constants/app_texts.dart';
+import 'package:hamza_portfolio_app/core/breakpoints/app_texts.dart';
+import 'package:hamza_portfolio_app/features/contact/widgets/contact_button.dart';
 import 'navigation_tab_item.dart';
 
 class PortfolioNavigationBar extends StatefulWidget {
