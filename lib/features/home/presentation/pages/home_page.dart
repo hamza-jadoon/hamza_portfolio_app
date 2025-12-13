@@ -670,7 +670,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 50),
               // Social Icons
               SlideTransition(
                 position: _socialSlideAnimation,
@@ -686,7 +686,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 50),
 
               // CTA Buttons
               SlideTransition(
@@ -699,7 +699,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       true,
                           () => _launchURL(AppLinks.github),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
                     _buildModernButton(
                       "Download CV",
                       Icons.download_rounded,
