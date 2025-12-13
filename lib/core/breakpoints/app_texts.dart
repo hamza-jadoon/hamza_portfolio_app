@@ -32,6 +32,8 @@ class AppTextContent {
   static const String projectprayertimeTitle = 'Islamic Prayer Time App';
   static const String projectbedtimeTitle = 'Bedtime Stories App';
   static const String projectmentalTitle = 'Rate Your Mental Health App';
+  static const String plannerapp = 'Menu Grocery Planner';
+
 
   static const String projectMobileSubtitle = 'Mobile Application';
 
@@ -58,6 +60,12 @@ Used Hive for storing and managing stories.
 Designed tools for mood & stress tracking with journaling.
 Added progress charts and daily reminders.
 Used Firebase Auth & Firestore for secure data sync.
+          ''';
+  static const String plannerappDescription ='''
+Created a grocery planner app to make shopping lists and manage daily grocery needs.
+Added a weekly meal planning feature to help users plan meals easily.
+Implemented in-app purchases and subscription features within the app.
+Designed a simple and user-friendly interface to help users plan groceries easily.
           ''';
 
   // Skills Names

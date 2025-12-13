@@ -139,12 +139,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _buildAnimatedBackground(
-    double screenWidth,
-    double screenHeight,
-    bool isDesktop,
-    bool isTablet,
-    bool isMobile,
-  ) {
+      double screenWidth,
+      double screenHeight,
+      bool isDesktop,
+      bool isTablet,
+      bool isMobile,
+      ) {
     if (isMobile) {
       return Container(
         width: double.infinity,
@@ -283,14 +283,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 width: 1,
               ),
             ),
-            // child: Text(
-            //   'HM', // Using initials as logo
-            //   style: TextStyle(
-            //     color: Colors.white,
-            //     fontWeight: FontWeight.bold,
-            //     fontSize: 16,
-            //   ),
-            // ),
           ),
           // Menu button with modern design
           Container(
@@ -444,10 +436,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _buildTabletLayout(
-    BuildContext context,
-    double screenWidth,
-    double screenHeight,
-  ) {
+      BuildContext context,
+      double screenWidth,
+      double screenHeight,
+      ) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -536,134 +528,284 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _buildMobileLayout(
-    BuildContext context,
-    double screenWidth,
-    double screenHeight,
-  ) {
-    return SizedBox(
+      BuildContext context,
+      double screenWidth,
+      double screenHeight,
+      ) {
+    return Container(
       height: screenHeight,
-      child: Stack(
-        children: [
-          // Background with profile image
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: screenHeight * 0.35,
-            child: Stack(
-              children: [
-                // Profile image as background
-                Positioned.fill(
-                  child: ModernProfileImage(
-                    fadeAnimation: widget.fadeAnimation,
-                    size: Size(screenWidth, screenHeight * 0.65),
-                    fit: BoxFit.cover,
-                    isDesktop: false,
-                    isTablet: false,
-                    images: [AppAssets.hamza22png],
-                  ),
-                ),
-                // Modern gradient overlay
-                Positioned.fill(
-                  child: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Theme.of(context).colorScheme.surface,
+            Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            Theme.of(context).colorScheme.secondary.withOpacity(0.03),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Profile Image with animated border
+              AnimatedBuilder(
+                animation: _pulseAnimation,
+                builder: (context, child) {
+                  return Container(
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
+                      shape: BoxShape.circle,
                       gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
                         colors: [
-                          Colors.black.withOpacity(0.2),
-                          Colors.black.withOpacity(0.4),
-                          Colors.black.withOpacity(0.8),
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary,
+                          Theme.of(context).colorScheme.tertiary,
                         ],
-                        stops: [0.0, 0.5, 1.0],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                      child: Transform.scale(
+                        scale: 0.99 + (_pulseAnimation.value * 0.02),
+                        child: Container(
+                          width: 140,
+                          height: 140,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                                blurRadius: 20,
+                                offset: const Offset(0, 8),
+                              ),
+                            ],
+                          ),
+                          child: ClipOval(
+                            child: ModernProfileImage(
+                              fadeAnimation: widget.fadeAnimation,
+                              size: const Size(140, 140),
+                              fit: BoxFit.cover,
+                              images: [AppAssets.hamza22png],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
 
-          // Text overlay with better positioning
-          Positioned(
-            bottom: screenHeight * 0.38,
-            left: 24,
-            right: 24,
-            child: FadeTransition(
-              opacity: widget.fadeAnimation,
-              child: SlideTransition(
+              const SizedBox(height: 20),
+
+              // Name and Title
+              SlideTransition(
                 position: widget.slideAnimation,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildGreeting(fontSize: 18, color: Colors.white),
-                    const SizedBox(height: 8),
-                    _buildName(fontSize: 36, color: Colors.white),
-                    const SizedBox(height: 8),
-                    _buildTitle(
-                      fontSize: 16,
-                      color: Colors.white.withOpacity(0.9),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // Bottom section with Material 3 design
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: screenHeight * 0.35,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, -5),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // Handle bar
-                    Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.outline.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(2),
+                    Text(
+                      AppTextContent.fullName,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.surface,
+                        letterSpacing: -0.5,
                       ),
                     ),
-                    const SizedBox(height: 24),
-
-                    // Short description
-                    _buildDescription(isMobile: true),
-                    const SizedBox(height: 32),
-
-                    // Social icons
-                    _buildSocialIcons(isMobile: true),
-                    const SizedBox(height: 24),
-
-                    // CTA Buttons
-                    _buildCTAButtons(isMobile: true),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 20,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                            Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        AppTextContent.jobTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
                   ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Description
+              FadeTransition(
+                opacity: widget.fadeAnimation,
+                child: Text(
+                  AppTextContent.aboutDescription,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
+                    height: 1.5,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 30),
+              // Social Icons
+              SlideTransition(
+                position: _socialSlideAnimation,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildModernSocialIcon(AppAssets.vector, AppLinks.email, Icons.email_outlined, 0),
+                    const SizedBox(width: 20),
+                    _buildModernSocialIcon(AppAssets.linkedin, AppLinks.linkedin, Icons.business, 1),
+                    const SizedBox(width: 20),
+                    _buildModernSocialIcon(AppAssets.github2, AppLinks.github, Icons.code, 2),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              // CTA Buttons
+              SlideTransition(
+                position: _socialSlideAnimation,
+                child: Column(
+                  children: [
+                    _buildModernButton(
+                      "View My Work",
+                      Icons.work_outline_rounded,
+                      true,
+                          () => _launchURL(AppLinks.github),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildModernButton(
+                      "Download CV",
+                      Icons.download_rounded,
+                      false,
+                          () => _openCV(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildModernSocialIcon(String assetPath, String url, IconData fallbackIcon, int index) {
+    return TweenAnimationBuilder(
+      duration: Duration(milliseconds: 600 + (index * 150)),
+      tween: Tween<double>(begin: 0, end: 1),
+      builder: (context, double value, child) {
+        return Transform.scale(
+          scale: value,
+          child: Material(
+              // color: Theme.of(context).colorScheme.onPrimary,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(14),
+              onTap: () => _launchURL(url),
+              child: Center(
+                child: Image.asset(
+                  assetPath,
+                  width: 40,
+                  height: 40,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
           ),
-        ],
+        );
+      },
+    );
+  }
+
+  Widget _buildModernButton(String text, IconData icon, bool isPrimary, VoidCallback onPressed) {
+    return Container(
+      width: double.infinity,
+      height: 56,
+      decoration: BoxDecoration(
+        gradient: isPrimary
+            ? LinearGradient(
+          colors: [
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.secondary,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        )
+            : null,
+        color: isPrimary ? null : Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: isPrimary
+            ? null
+            : Border.all(
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          width: 2,
+        ),
+        boxShadow: isPrimary
+            ? [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ]
+            : null,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onPressed,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: isPrimary
+                    ? Colors.white
+                    : Theme.of(context).colorScheme.primary,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                text,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: isPrimary
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.primary,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -693,19 +835,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         opacity: widget.fadeAnimation,
         child: isMobile
             ? Column(
-                children: [
-                  _buildPrimaryButton("View My Work", true),
-                  const SizedBox(height: 12),
-                  _buildSecondaryButton("Download CV", false),
-                ],
-              )
+          children: [
+            _buildPrimaryButton("View My Work", true),
+            const SizedBox(height: 12),
+            _buildSecondaryButton("Download CV", false),
+          ],
+        )
             : Row(
-                children: [
-                  _buildPrimaryButton("View My Work", false),
-                  const SizedBox(width: 16),
-                  _buildSecondaryButton("Download CV", false),
-                ],
-              ),
+          children: [
+            _buildPrimaryButton("View My Work", false),
+            const SizedBox(width: 16),
+            _buildSecondaryButton("Download CV", false),
+          ],
+        ),
       ),
     );
   }
@@ -758,11 +900,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   double _getResponsiveFontSize(
-    double screenWidth,
-    double desktop,
-    double tablet,
-    double mobile,
-  ) {
+      double screenWidth,
+      double desktop,
+      double tablet,
+      double mobile,
+      ) {
     if (screenWidth > 1024) return desktop;
     if (screenWidth > 768) return tablet;
     return mobile;
@@ -897,4 +1039,3 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 }
-

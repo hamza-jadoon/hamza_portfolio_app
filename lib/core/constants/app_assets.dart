@@ -9,6 +9,7 @@ class AppAssets {
   static const String bedtimepng = "assets/images/bedtime.png";
   static const String menyoupng = "assets/images/menyou.png";
   static const String prayertimepng = "assets/images/prayertime.png";
+  static const String planner = "assets/images/planner.png";
 
 
   static const String http = "assets/app_icons/sql-server.png";

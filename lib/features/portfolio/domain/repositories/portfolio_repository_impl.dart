@@ -7,6 +7,22 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
   static final List<Map<String, dynamic>> _projectsData = [
     const {
       'id': '1',
+      'title': AppTextContent.plannerapp,
+      'subtitle': AppTextContent.projectMobileSubtitle,
+      'description': AppTextContent.plannerappDescription,
+      'imageAsset': AppAssets.planner,
+      'tags': [
+        AppTextContent.skillFlutter,
+        AppTextContent.development,
+        AppTextContent.skillUiUx,
+        AppTextContent.categoryDesign,
+        AppTextContent.skillHive,
+      ],
+      'liveUrl': 'https://play.google.com/store/apps/details?id=hivesoft.menu.grocery.planner.shopping.larder.list&hl=en',
+      // 'githubUrl': 'https://github.com/yourusername/planner-app',
+    },
+    const {
+      'id': '2',
       'title': AppTextContent.projectMenYouTitle,
       'subtitle': AppTextContent.projectMobileSubtitle,
       'description': AppTextContent.projectMenYouDescription,
@@ -18,9 +34,11 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
         AppTextContent.skillApiIntegration,
         AppTextContent.riverpod,
       ],
+      'liveUrl': 'https://play.google.com/store/apps/details?id=hivesoft.menu.grocery.planner.shopping.larder.list&hl=en',
+
     },
     const {
-      'id': '2',
+      'id': '3',
       'title': AppTextContent.projectprayertimeTitle,
       'subtitle': AppTextContent.projectMobileSubtitle,
       'description': AppTextContent.projectprayerDescription,
@@ -32,9 +50,11 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
         AppTextContent.skillLocalNotification,
         AppTextContent.skillCleanArchitecture,
       ],
+      'liveUrl': 'https://play.google.com/store/apps/details?id=hivesoft.menu.grocery.planner.shopping.larder.list&hl=en',
+
     },
     const {
-      'id': '3',
+      'id': '4',
       'title': AppTextContent.projectbedtimeTitle,
       'subtitle': AppTextContent.projectMobileSubtitle,
       'description': AppTextContent.projectbedtimeDescription,
@@ -46,9 +66,11 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
         AppTextContent.skillAnimations,
         AppTextContent.skillDatabase,
       ],
+      'liveUrl': 'https://play.google.com/store/apps/details?id=hivesoft.menu.grocery.planner.shopping.larder.list&hl=en',
+
     },
-    {
-      'id': '4',
+    const {
+      'id': '5',
       'title': AppTextContent.projectmentalTitle,
       'subtitle': AppTextContent.projectMobileSubtitle,
       'description': AppTextContent.projectmentalDescription,
@@ -60,6 +82,8 @@ class PortfolioRepositoryImpl implements PortfolioRepository {
         AppTextContent.skillAuthentication,
         AppTextContent.skillHttp,
       ],
+      'liveUrl': 'https://play.google.com/store/apps/details?id=hivesoft.menu.grocery.planner.shopping.larder.list&hl=en',
+
     },
 
   ];

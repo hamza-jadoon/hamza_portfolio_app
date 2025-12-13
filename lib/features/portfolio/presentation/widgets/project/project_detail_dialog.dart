@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:hamza_portfolio_app/core/constants/app_colors.dart';
 import 'package:hamza_portfolio_app/features/portfolio/data/models/project_model.dart';
 
@@ -115,6 +116,33 @@ class _ProjectDetailDialogState extends State<ProjectDetailDialog>
     }
   }
 
+  Future<void> _launchUrl(String url) async {
+    try {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Could not open link: $url'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error opening link: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -166,6 +194,7 @@ class _ProjectDetailDialogState extends State<ProjectDetailDialog>
         children: [
           _buildHeader(),
           Flexible(child: _buildBody()),
+          _buildFooter(), // NEW: Footer with action buttons
         ],
       ),
     );
@@ -240,7 +269,6 @@ class _ProjectDetailDialogState extends State<ProjectDetailDialog>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Subtitle with animated appearance
                 AnimatedBuilder(
                   animation: _fadeController,
                   builder: (context, child) {
@@ -262,7 +290,6 @@ class _ProjectDetailDialogState extends State<ProjectDetailDialog>
                   },
                 ),
                 const SizedBox(height: 12),
-                // Title with delayed animation
                 AnimatedBuilder(
                   animation: _scaleController,
                   builder: (context, child) {
@@ -286,7 +313,6 @@ class _ProjectDetailDialogState extends State<ProjectDetailDialog>
               ],
             ),
           ),
-          // Close button with hover animation
           _buildCloseButton(),
         ],
       ),
@@ -339,12 +365,6 @@ class _ProjectDetailDialogState extends State<ProjectDetailDialog>
             delay: 0.4,
             child: _buildTechnologyTags(),
           ),
-          // const SizedBox(height: 32),
-          // // _buildAnimatedSection(
-          // //   title: 'Key Features',
-          // //   delay: 0.6,
-          //   // child: _buildKeyFeatures(),
-          // ),
         ],
       ),
     );
@@ -526,4 +546,133 @@ class _ProjectDetailDialogState extends State<ProjectDetailDialog>
     );
   }
 
+  // NEW: Footer with action buttons
+  Widget _buildFooter() {
+    final hasLinks = widget.project.liveUrl != null || widget.project.githubUrl != null;
+
+    if (!hasLinks) return const SizedBox.shrink();
+
+    return AnimatedBuilder(
+      animation: _scaleController,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, 20 * (1 - _scaleController.value)),
+          child: Opacity(
+            opacity: _scaleController.value,
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AppColors.gradientStart.withOpacity(0.05),
+                    AppColors.gradientEnd.withOpacity(0.1),
+                  ],
+                ),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(28),
+                  bottomRight: Radius.circular(28),
+                ),
+                border: Border(
+                  top: BorderSide(
+                    color: AppColors.getTextColor(context).withOpacity(0.1),
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (widget.project.githubUrl != null) ...[
+                    _buildActionButton(
+                      icon: Icons.code_rounded,
+                      label: 'View Code',
+                      onPressed: () => _launchUrl(widget.project.githubUrl!),
+                      isPrimary: false,
+                    ),
+                    const SizedBox(width: 12),
+                  ],
+                  if (widget.project.liveUrl != null)
+                    _buildActionButton(
+                      icon: Icons.launch_rounded,
+                      label: 'View Live',
+                      onPressed: () => _launchUrl(widget.project.liveUrl!),
+                      isPrimary: true,
+                    ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+    required bool isPrimary,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: isPrimary
+            ? AppColors.logoGradient
+            : LinearGradient(
+          colors: [
+            AppColors.getTextColor(context).withOpacity(0.1),
+            AppColors.getTextColor(context).withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: isPrimary
+            ? [
+          BoxShadow(
+            color: AppColors.gradientStart.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ]
+            : null,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(30),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 14,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  color: isPrimary
+                      ? Colors.white
+                      : AppColors.getTextColor(context),
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: isPrimary
+                        ? Colors.white
+                        : AppColors.getTextColor(context),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
